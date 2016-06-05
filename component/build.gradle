@@ -5,14 +5,14 @@ apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.nekocode'
 
 android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
+    compileSdkVersion vers.compileSdk
+    buildToolsVersion vers.buildTools
 
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.compileSdk
-        versionCode 300
-        versionName "1.0.0"
+        minSdkVersion vers.minSdk
+        targetSdkVersion vers.compileSdk
+        versionCode vers.versionCode
+        versionName vers.versionName
     }
 
     packagingOptions {
@@ -23,18 +23,18 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     // Android support library
-    provided "com.android.support:appcompat-v7:$versions.supportLibs"
-    provided "com.android.support:recyclerview-v7:$versions.supportLibs"
+    provided "com.android.support:appcompat-v7:$vers.supportLibs"
+    provided "com.android.support:recyclerview-v7:$vers.supportLibs"
 
     // Reactive library
-    provided "io.reactivex:rxkotlin:$versions.rxKotlin"
-    provided "io.reactivex:rxandroid:$versions.rxAndroid"
+    provided "io.reactivex:rxkotlin:$vers.rxKotlin"
+    provided "io.reactivex:rxandroid:$vers.rxAndroid"
 
     // DSL
-    provided "org.jetbrains.anko:anko-sdk15:$versions.anko" // sdk19, sdk21, sdk23 are also available
-    provided "org.jetbrains.anko:anko-appcompat-v7:$versions.anko" // For appcompat-v7 bindings
+    provided "org.jetbrains.anko:anko-sdk15:$vers.anko" // sdk19, sdk21, sdk23 are also available
+    provided "org.jetbrains.anko:anko-appcompat-v7:$vers.anko" // For appcompat-v7 bindings
 
-    provided "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    provided "org.jetbrains.kotlin:kotlin-stdlib:$vers.kotlin"
 }
 
 task sourcesJar(type: Jar) {

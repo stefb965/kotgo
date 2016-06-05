@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
+    compileSdkVersion vers.compileSdk
+    buildToolsVersion vers.buildTools
 
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.compileSdk
-        versionCode 300
-        versionName "1.0.0"
+        minSdkVersion vers.minSdk
+        targetSdkVersion vers.compileSdk
+        versionCode vers.versionCode
+        versionName vers.versionName
     }
 
     buildTypes {
@@ -37,20 +37,20 @@ dependencies {
     compile project(":component")
 
     // Android support library
-    compile "com.android.support:appcompat-v7:$versions.supportLibs"
-    compile "com.android.support:recyclerview-v7:$versions.supportLibs"
+    compile "com.android.support:appcompat-v7:$vers.supportLibs"
+    compile "com.android.support:recyclerview-v7:$vers.supportLibs"
 
     // Reactive library
-    compile "io.reactivex:rxkotlin:$versions.rxKotlin"
-    compile "io.reactivex:rxandroid:$versions.rxAndroid"
+    compile "io.reactivex:rxkotlin:$vers.rxKotlin"
+    compile "io.reactivex:rxandroid:$vers.rxAndroid"
 
     // DSL
-    compile "org.jetbrains.anko:anko-sdk15:$versions.anko" // sdk19, sdk21, sdk23 are also available
-    compile "org.jetbrains.anko:anko-support-v4:$versions.anko" // In case you need support-v4 bindings
-    compile "org.jetbrains.anko:anko-appcompat-v7:$versions.anko" // For appcompat-v7 bindings
+    compile "org.jetbrains.anko:anko-sdk15:$vers.anko" // sdk19, sdk21, sdk23 are also available
+    compile "org.jetbrains.anko:anko-support-v4:$vers.anko" // In case you need support-v4 bindings
+    compile "org.jetbrains.anko:anko-appcompat-v7:$vers.anko" // For appcompat-v7 bindings
 
     // Artwork
-    compile "com.squareup.picasso:picasso:$versions.picasso"
+    compile "com.squareup.picasso:picasso:$vers.picasso"
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$vers.kotlin"
 }

@@ -37,11 +37,14 @@ class MainFragment : BaseFragment(), Contract.View {
 
         toolbar.title = "Meizi List - Loading"
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = meiziPresenter.getAdapter()
 
         RxBus.subscribe(LoadFinishedEvent::class.java) {
             toolbar.title = "Meizi List - Load finished"
         }
+    }
+
+    override fun setupAdapter(adapter: RecyclerView.Adapter<*>) {
+        recyclerView.adapter = adapter
     }
 
     override fun onBackPressed(): Boolean {

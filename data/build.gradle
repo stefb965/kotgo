@@ -2,14 +2,14 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
+    compileSdkVersion vers.compileSdk
+    buildToolsVersion vers.buildTools
 
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.compileSdk
-        versionCode 300
-        versionName "1.0.0"
+        minSdkVersion vers.minSdk
+        targetSdkVersion vers.compileSdk
+        versionCode vers.versionCode
+        versionName vers.versionName
     }
 
     packagingOptions {
@@ -25,21 +25,21 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Retrofit
-    compile "com.squareup.retrofit2:retrofit:$versions.retrofit"
-    compile "com.squareup.retrofit2:converter-gson:$versions.retrofit"
-    compile "com.squareup.retrofit2:adapter-rxjava:$versions.retrofit"
+    compile "com.squareup.retrofit2:retrofit:$vers.retrofit"
+    compile "com.squareup.retrofit2:converter-gson:$vers.retrofit"
+    compile "com.squareup.retrofit2:adapter-rxjava:$vers.retrofit"
 
     // Storage library
-    compile "com.github.orhanobut:hawk:$versions.hawk"
+    compile "com.github.orhanobut:hawk:$vers.hawk"
 
     // Debug library
-    compile "com.facebook.stetho:stetho:$versions.stetho"
-    compile "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
+    compile "com.facebook.stetho:stetho:$vers.stetho"
+    compile "com.facebook.stetho:stetho-okhttp3:$vers.stetho"
 
     // Instance State
-    compile "com.github.grandstaish.paperparcel:paperparcel:$versions.paperparcel"
-    compile "com.github.grandstaish.paperparcel:paperparcel-kotlin:$versions.paperparcel"
-    kapt "com.github.grandstaish.paperparcel:compiler:$versions.paperparcel"
+    compile "com.github.grandstaish.paperparcel:paperparcel:$vers.paperparcel"
+    compile "com.github.grandstaish.paperparcel:paperparcel-kotlin:$vers.paperparcel"
+    kapt "com.github.grandstaish.paperparcel:compiler:$vers.paperparcel"
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$vers.kotlin"
 }

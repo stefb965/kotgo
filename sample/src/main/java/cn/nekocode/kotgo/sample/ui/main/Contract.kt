@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView
  */
 interface Contract {
     interface View {
+        fun setupAdapter(adapter: RecyclerView.Adapter<*>)
     }
 
     interface Presenter {
-        fun getAdapter(): RecyclerView.Adapter<*>
     }
 }

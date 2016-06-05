@@ -8,7 +8,7 @@ import android.view.ViewGroup
 /**
  * Created by nekocode on 2015/11/20.
  */
-open class BasePresenter() : WithLifecycleFragment() {
+abstract class BasePresenter() : WithLifecycleFragment() {
     val fragAct: FragmentActivity?
         get() = activity as FragmentActivity?
 
@@ -25,8 +25,11 @@ open class BasePresenter() : WithLifecycleFragment() {
     }
 
     final override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        onVewCreated()
         return super.onCreateView(inflater, container, savedInstanceState)
     }
+
+    abstract fun onVewCreated()
 
     final override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

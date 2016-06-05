@@ -1,4 +1,7 @@
-ext.versions = [
+ext.vers = [
+        versionCode: 301,
+        versionName: '1.0.1',
+
         compileSdk : 23,
         minSdk     : 17,
         buildTools : '23.0.3',
