@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.Parcelable
 import cn.nekocode.kotgo.component.rx.RxBus
-import cn.nekocode.kotgo.component.rx.bindAction
 import cn.nekocode.kotgo.component.rx.bindLifecycle
 import cn.nekocode.kotgo.component.rx.onUI
 import cn.nekocode.kotgo.component.ui.BasePresenter
@@ -26,7 +25,7 @@ class MeiziPresenter() : BasePresenter(), Contract.Presenter {
 
     var view: Contract.View? = null
     val meiziList = ArrayList<Meizi>()
-    val meiziListadapter = MeiziListAdapter(meiziList)
+    val adapter = MeiziListAdapter(meiziList)
 
     override fun onAttach(activity: Activity?) {
         super.onAttach(activity)
@@ -36,7 +35,7 @@ class MeiziPresenter() : BasePresenter(), Contract.Presenter {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val getMeizi = Observable.just(savedInstanceState).bindLifecycle(this)
+        Observable.just(savedInstanceState).bindLifecycle(this)
                 .flatMap {
                     if (it == null) MeiziRepo.getMeizis(50, 1)
                     else Observable.just(
@@ -49,22 +48,22 @@ class MeiziPresenter() : BasePresenter(), Contract.Presenter {
                     meiziList.clear()
                     meiziList.addAll(it)
                     Observable.empty<Unit>()
-                }.share()
-
-        val refreshList = onUI<Unit> { meiziListadapter.notifyDataSetChanged() }
-
-        // Trigger
-        getMeizi.bindAction(refreshList)
+                }
+                .onUI {
+                    adapter.notifyDataSetChanged()
+                }
     }
 
     // You should not access the view on presenter's onCreate() because
     // when the screen rotates the presenter recreates more quickly than
     // the view. You should access the view on onVewCreated()
     override fun onVewCreated(savedInstanceState: Bundle?) {
-        view?.setupAdapter(meiziListadapter)
+        with(adapter) {
+            view?.setupAdapter(this)
 
-        meiziListadapter.onMeiziItemClickListener = {
-            Page2Fragment.push(fragAct!!, it)
+            onMeiziItemClickListener = {
+                Page2Fragment.push(fragAct!!, it)
+            }
         }
     }
 

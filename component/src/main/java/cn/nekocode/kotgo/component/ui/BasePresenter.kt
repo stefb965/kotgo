@@ -34,12 +34,4 @@ abstract class BasePresenter() : WithLifecycleFragment() {
     final override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
-
-    final override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-    }
-
-    final override fun onDestroyView() {
-        super.onDestroyView()
-    }
 }
