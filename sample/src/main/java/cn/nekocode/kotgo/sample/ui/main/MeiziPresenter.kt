@@ -60,7 +60,7 @@ class MeiziPresenter() : BasePresenter(), Contract.Presenter {
     // You should not access the view on presenter's onCreate() because
     // when the screen rotates the presenter recreates more quickly than
     // the view. You should access the view on onVewCreated()
-    override fun onVewCreated() {
+    override fun onVewCreated(savedInstanceState: Bundle?) {
         view?.setupAdapter(meiziListadapter)
 
         meiziListadapter.onMeiziItemClickListener = {

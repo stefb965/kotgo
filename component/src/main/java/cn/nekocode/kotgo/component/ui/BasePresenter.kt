@@ -25,11 +25,11 @@ abstract class BasePresenter() : WithLifecycleFragment() {
     }
 
     final override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        onVewCreated()
+        onVewCreated(savedInstanceState)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    abstract fun onVewCreated()
+    abstract fun onVewCreated(savedInstanceState: Bundle?)
 
     final override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
