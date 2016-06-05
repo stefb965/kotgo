@@ -1,6 +1,6 @@
 ext.vers = [
         versionCode: 301,
-        versionName: '1.0.1',
+        versionName: '1.0.2',
 
         compileSdk : 23,
         minSdk     : 17,
