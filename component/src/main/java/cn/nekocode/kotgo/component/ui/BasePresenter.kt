@@ -1,21 +1,42 @@
 package cn.nekocode.kotgo.component.ui
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+
 /**
  * Created by nekocode on 2015/11/20.
  */
-open class BasePresenter(): WithLifecycleFragment() {
+open class BasePresenter() : WithLifecycleFragment() {
     val fragAct: FragmentActivity?
         get() = activity as FragmentActivity?
 
     protected fun getParent(): Any? {
         var view: Any? = null
 
-        if(parentFragment != null) {
+        if (parentFragment != null) {
             view = parentFragment
-        } else if(activity != null) {
+        } else if (activity != null) {
             view = activity
         }
 
         return view
+    }
+
+    final override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    final override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    final override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+    }
+
+    final override fun onDestroyView() {
+        super.onDestroyView()
     }
 }
