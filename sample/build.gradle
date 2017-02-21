@@ -69,6 +69,10 @@ dependencies {
     // Artwork
     compile "com.squareup.picasso:picasso:2.5.2"
 
+    // Persist Instance State
+    compile 'com.evernote:android-state:1.0.1'
+    annotationProcessor 'com.evernote:android-state-processor:1.0.1'
+
     compile "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_VERSION"
 }
 

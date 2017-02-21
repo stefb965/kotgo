@@ -3,7 +3,6 @@ package cn.nekocode.kotgo.sample.ui.main
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import cn.nekocode.kotgo.component.rx.RxBus
 import cn.nekocode.kotgo.component.ui.KtPresenter
 import cn.nekocode.kotgo.sample.data.DO.Meizi
@@ -11,6 +10,8 @@ import cn.nekocode.kotgo.sample.data.DO.MeiziParcel
 import cn.nekocode.kotgo.sample.data.repo.MeiziRepo
 import cn.nekocode.kotgo.sample.event.LoadFinishedEvent
 import cn.nekocode.kotgo.sample.ui.page2.Page2Presenter
+import com.evernote.android.state.State
+import com.evernote.android.state.StateSaver
 import rx.Observable
 import java.util.*
 
@@ -19,38 +20,32 @@ import java.util.*
  */
 class MainPresenter() : KtPresenter<Contract.View>(), Contract.Presenter {
     companion object {
-        const val KEY_SAVED_MEIZIS = "KEY_SAVED_MEIZIS"
         const val REQUEST_CODE_PAGE2 = 1
     }
 
     var view: Contract.View? = null
-    val meiziList = ArrayList<Meizi>()
+    @State var meiziList = ArrayList<Meizi>()
     val adapter = MeiziListAdapter(meiziList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        StateSaver.restoreInstanceState(this, savedInstanceState)
 
-        Observable.just(savedInstanceState)
+        Observable.just(meiziList)
                 .flatMap {
-                    if (it == null) {
+                    if (it.size <= 0) {
                         MeiziRepo.getMeizis(50, 1)
 
                     } else {
-                        Observable.just(
-                                it.getParcelableArrayList<MeiziParcel>(
-                                        KEY_SAVED_MEIZIS).map { it.data }
-                        )
-                    }
-                }
-                .flatMap {
-                    Observable.fromCallable {
-                        meiziList.clear()
-                        meiziList.addAll(it)
-                        RxBus.send(LoadFinishedEvent())
+                        Observable.just(it)
                     }
                 }
                 .safetySubscribe({
+                    meiziList.clear()
+                    meiziList.addAll(it)
                     adapter.notifyDataSetChanged()
+                    RxBus.send(LoadFinishedEvent())
+
                 }, {})
     }
 
@@ -68,9 +63,7 @@ class MainPresenter() : KtPresenter<Contract.View>(), Contract.Presenter {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        outState?.putParcelableArrayList(
-                KEY_SAVED_MEIZIS,
-                meiziList.map(::MeiziParcel) as ArrayList<out Parcelable>)
+        StateSaver.saveInstanceState(this, outState ?: return)
     }
 
     override fun onResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -22,6 +22,7 @@ class Page2Fragment : BaseFragment(), Contract.View {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         return inflater?.inflate(R.layout.fragment_page2, container, false)
     }
 
