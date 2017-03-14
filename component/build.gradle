@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 3
-        versionName "2.0.1"
+        versionCode 4
+        versionName "2.0.9"
     }
 }
 
@@ -26,8 +26,8 @@ dependencies {
     provided "com.android.support:support-annotations:$SUPPORT_LIBS_VERSION"
 
     // Reactive library
-    provided "io.reactivex:rxkotlin:0.60.0"
-    provided "io.reactivex:rxandroid:1.2.1"
+    provided "io.reactivex.rxjava2:rxkotlin:2.0.0-RC3"
+    provided "io.reactivex.rxjava2:rxandroid:2.0.1"
 
     // DSL
     provided "org.jetbrains.anko:anko-sdk15:$ankoVersion" // sdk19, sdk21, sdk23 are also available

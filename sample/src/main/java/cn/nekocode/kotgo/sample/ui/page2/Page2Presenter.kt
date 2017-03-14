@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import cn.nekocode.kotgo.component.ui.KtPresenter
 import cn.nekocode.kotgo.sample.data.DO.Meizi
-import cn.nekocode.kotgo.sample.data.DO.MeiziParcel
-import rx.Observable
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
@@ -17,10 +17,10 @@ class Page2Presenter() : KtPresenter<Contract.View>(), Contract.Presenter {
         const val KEY_RLT_MEIZI = "KEY_RLT_MEIZI"
 
         fun pushForResult(presenter: KtPresenter<*>, requestCode: Int, meizi: Meizi,
-                 tag: String = Page2Fragment::class.java.canonicalName) {
+                          tag: String = Page2Fragment::class.java.canonicalName) {
 
             val args = Bundle()
-            args.putParcelable(KEY_ARG_MEIZI, MeiziParcel(meizi))
+            args.putParcelable(KEY_ARG_MEIZI, meizi)
             presenter.pushForResult(requestCode, tag, Page2Fragment::class.java, args)
         }
     }
@@ -30,15 +30,17 @@ class Page2Presenter() : KtPresenter<Contract.View>(), Contract.Presenter {
     override fun onViewCreated(view: Contract.View?, savedInstanceState: Bundle?) {
         this.view = view
 
-        val meizi = arguments.getParcelable<MeiziParcel>(KEY_ARG_MEIZI).data
+        val meizi = arguments.getParcelable<Meizi>(KEY_ARG_MEIZI)
         Observable.just(meizi)
                 .map {
                     // DO to VO
                     MeiziVO(it.id, it.url, it)
                 }
-                .safetySubscribe({
+                .bindLifecycle()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
                     view?.showMeizi(it)
-                }, {})
+                }
     }
 
     override fun onImageClick(meiziVO: MeiziVO) {
@@ -47,7 +49,7 @@ class Page2Presenter() : KtPresenter<Contract.View>(), Contract.Presenter {
 
         // Set result and finish
         val rlt = Intent()
-        rlt.putExtra(KEY_RLT_MEIZI, MeiziParcel(meizi))
+        rlt.putExtra(KEY_RLT_MEIZI, meizi)
         setResult(Activity.RESULT_OK, rlt)
         popThis()
     }

@@ -6,13 +6,13 @@ import android.os.Bundle
 import cn.nekocode.kotgo.component.rx.RxBus
 import cn.nekocode.kotgo.component.ui.KtPresenter
 import cn.nekocode.kotgo.sample.data.DO.Meizi
-import cn.nekocode.kotgo.sample.data.DO.MeiziParcel
 import cn.nekocode.kotgo.sample.data.repo.MeiziRepo
 import cn.nekocode.kotgo.sample.event.LoadFinishedEvent
 import cn.nekocode.kotgo.sample.ui.page2.Page2Presenter
 import com.evernote.android.state.State
 import com.evernote.android.state.StateSaver
-import rx.Observable
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.*
 
 /**
@@ -40,13 +40,15 @@ class MainPresenter() : KtPresenter<Contract.View>(), Contract.Presenter {
                         Observable.just(it)
                     }
                 }
-                .safetySubscribe({
+                .bindLifecycle()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
                     meiziList.clear()
                     meiziList.addAll(it)
                     adapter.notifyDataSetChanged()
                     RxBus.send(LoadFinishedEvent())
 
-                }, {})
+                }
     }
 
     override fun onViewCreated(view: Contract.View?, savedInstanceState: Bundle?) {
@@ -70,7 +72,7 @@ class MainPresenter() : KtPresenter<Contract.View>(), Contract.Presenter {
         when (requestCode) {
             REQUEST_CODE_PAGE2 -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    val rltMeizi = data.getParcelableExtra<MeiziParcel>(Page2Presenter.KEY_RLT_MEIZI).data
+                    val rltMeizi = data.getParcelableExtra<Meizi>(Page2Presenter.KEY_RLT_MEIZI)
                     view?.toast("You clicked the photo: ${rltMeizi.id}")
                 }
             }

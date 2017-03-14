@@ -32,13 +32,13 @@ cn.nekocode.kotgo.sample
 ```
 
 ### Dependencies
-- **kotlin: `1.0.6`**
-- anko: **`0.9`**
-- rxkotlin: **`0.60.0`**
-- retrofit: **`2.1.0`**
+- **kotlin: `1.1.1`**
+- anko: **`0.9.1`**
+- rxkotlin: **`2.0.0-RC3`**
+- retrofit: **`2.2.0`**
 - picasso: **`2.5.2`**
 - paper: **`2.0.0`**
-- paperparcel: **`1.0.0`**
+- paperparcel: **`2.0.0`**
 
 ### Sample
 Thanks to **[gank.io](http://gank.io/)**. The sample app fetchs photos from it.
@@ -65,22 +65,24 @@ dependencies {
 ### RxLifecycle & RxBus
 You can bind the RxJava subscriptions into the lifecycle of the class that implements `RxLifecycle.Impl` (such as base activity, fragment and presenter). It can help you unsubscribe the `Observable` when the activity or fragment is destoried.
 ```kotlin
-MeiziRepo.getMeizis(50, 1).safetySubscribe({
-    view.refreshMeizis(it)
-}, {
-    // onError
-})
+MeiziRepo.getMeizis(50, 1)
+        .bindLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe {
+            view.refreshMeizis(it)
+        }
 ```
 
-And you can use `RxBus` to send events everywhere. And then subscribe them in the class that implements `RxLifecycle.Impl`
+And you can use `RxBus` to send events everywhere.
 
 ```kotlin
 RxBus.send("Success")
-RxBus.safetySubscribe(String::class.java, {
-    showToast(it)
-}, {
-    // onError
-})
+RxBus.toObserverable(String::class.java)
+        .bindLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe {
+            showToast(it)
+        }
 ```
 
 ### Fragment Presenter

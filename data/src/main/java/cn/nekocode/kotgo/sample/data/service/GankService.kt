@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -42,7 +42,7 @@ internal object GankService {
     val REST_ADAPTER: Retrofit = Retrofit.Builder()
             .baseUrl(API_HOST_URL)
             .addConverterFactory(GsonConverterFactory.create(GSON))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(HTTP_CLIENT)
             .build()
 

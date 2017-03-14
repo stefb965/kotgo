@@ -1,6 +1,5 @@
 package cn.nekocode.kotgo.sample.data
 
-import cn.nekocode.kotgo.sample.data.DO.Meizi
 import cn.nekocode.kotgo.sample.data.repo.MeiziRepo
 import org.junit.Assert
 import org.junit.Before
@@ -9,8 +8,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
-
-import rx.observers.TestSubscriber
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
@@ -26,10 +23,7 @@ class GankServiceTest {
 
     @Test
     fun testGetMeizis() {
-        val testSubscriber = TestSubscriber<List<Meizi>>()
-        MeiziRepo.getMeizis(10, 1).toBlocking().subscribe(testSubscriber)
-
-        val meizis = testSubscriber.onNextEvents[0]
+        val meizis = MeiziRepo.getMeizis(10, 1).blockingFirst()
         Assert.assertTrue(meizis.isNotEmpty())
     }
 }

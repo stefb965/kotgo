@@ -10,6 +10,7 @@ import cn.nekocode.kotgo.component.rx.RxBus
 import cn.nekocode.kotgo.sample.R
 import cn.nekocode.kotgo.sample.base.BaseFragment
 import cn.nekocode.kotgo.sample.event.LoadFinishedEvent
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
@@ -21,9 +22,12 @@ class MainFragment : BaseFragment(), Contract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        RxBus.safetySubscribe(LoadFinishedEvent::class.java, {
+RxBus.toObserverable(LoadFinishedEvent::class.java)
+        .bindLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe {
             toolbar.title = "Meizi List - Load finished"
-        }, {})
+        }
     }
 
     override fun onCreatePresenter(presenterFactory: PresenterFactory) {

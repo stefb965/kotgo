@@ -2,9 +2,9 @@ package cn.nekocode.kotgo.sample.data.service.Api
 
 import cn.nekocode.kotgo.sample.data.DO.Meizi
 import cn.nekocode.kotgo.sample.data.service.GankService
+import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
-import rx.Observable
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
